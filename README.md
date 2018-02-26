@@ -23,7 +23,7 @@ git clone https://github.com/tomocy/ansible_go.git
 ## Usage
 
 Edit file 'hosts' for your configuration  
-```rb:hosts
+```hosts
 [remotes]
 XXX.XXX.XX.XX # Host
 ansible_ssh_user=YYY # SSH user
@@ -32,8 +32,9 @@ ansible_ssh_private_key_file=ZZZ # Path to SSH private key
 
 If you want to use other Go version,  
 find it at https://golang.org/dl/ and copy File name and SHA256 Checksum of Linux  
-Edit 'vars/main.yml'
-```rb:main.yml
+  
+Then, edit 'vars/main.yml'
+```yml:main.yml
 go_version_target: "go version goX.X.X linux/YYY" # X.X.X is Go version. YYY is architecture.
 go_tarball: "FILENAME" # File name you copied
 go_download_url: "https://storage.googleapis.com/golang/{{ go_tarball }}"
