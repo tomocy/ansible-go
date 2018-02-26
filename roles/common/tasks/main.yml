@@ -1,0 +1,24 @@
+---
+- name: Make go workplace to share to guest pc if not exists
+  file:
+    path: "/vagrant/code/{{ item }}"
+    state: directory
+  with_items:
+    - bin
+    - src
+    - pkg
+
+- name: Put symbolic link to share to guest pc
+  file:
+    src: /vagrant/code
+    dest: /home/vagrant/code
+    state: link
+
+- name: Update .bash_profile to export PATH
+  blockinfile:
+    path: ~/.bash_profile
+    create: yes
+    content: |
+      if [ -f /etc/profile ]; then
+      . /etc/profile
+      fi

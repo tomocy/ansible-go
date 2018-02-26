@@ -1,0 +1,36 @@
+
+- name: Donwload go tarball
+  get_url:
+    url: "{{ go_download_url }}"
+    dest: "/usr/local/src/{{ go_tarball }}"
+    checksum: "{{ go_tarball_checksum }}"
+
+- name: Register the current go version
+  command: /usr/local/go/bin/go version
+  ignore_errors: yes
+  register: go_version
+  chenged_when: false
+
+- name: Remove older version of go
+  file:
+    path: /usr/local/go
+    state: absent
+  when: go_version|failed or go_version.stdout != go_version_target
+
+- name: Extract go tarball if go is not installed yet or not the desired version
+  unarchive:
+    src: "/usr/local/src/{{ go_tarball }}"
+    dest: /usr/local
+    remote_src: yes
+  when: go_version|failed or go_version.stdout != go_version_target
+
+- name: Add go bin direcotry to PATH environment variable for all users
+  copy:
+    src: go_bin.sh
+    dest: /etc/profile.d
+
+- name: Set gopath for all users
+  copy:
+    src: go_path.sh
+    dest: /etc/profile.d
+  when: set_go_path
