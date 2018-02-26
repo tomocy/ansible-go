@@ -17,7 +17,7 @@ CentOS
 ## Install
 
 ```
-git clone URL
+git clone https://github.com/tomocy/ansible_go.git
 ```
 
 ## Usage
@@ -44,8 +44,6 @@ Last, command this at the directory you cloned
 ```
 ansible-playbook -i hosts site.yml
 ```
-
-## Contribution
 
 
 ## Author
